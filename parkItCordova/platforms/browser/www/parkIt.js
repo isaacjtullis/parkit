@@ -60,5 +60,44 @@ function showParkingLocation() {
   });
   setCss('map','visibility','visible');
 }
+
+function getParkingLocation() {
+  navigator.geolocation.getCurrentPosition(getParkingLocationSuccess, locationError, {enableHighAccuracy: true})
+}
+
+function getParkingLocationSuccess(position) {
+  latitude = position.coords.latitude;
+  longitude = position.coords.longitude;
+  parkedLatitude = storage.getItem('parkedLatitude');
+  parkedLongitude = storage.getItem('parkedLongitude');
+  showDirections();
+}
+
+function showDirections() {
+  var dRenderer = new google.maps.DirectionsRenderer;
+  var dService = new google.maps.DirectionsService;
+  var curLatLong = new google.maps.LatLng(latitude, longitude);
+  var parkedLatLong = new google.maps.LatLng(parkedLatitude, parkedLongitude);
+  var map = new google.maps.Map(document.getElementById('map'));
+  map.setZoom(16);
+  map.setCenter(curLatLong);
+  dRenderer.setMap(map);
+  dService.route({
+    origin: curLatLong,
+    destination: parkedLatLong,
+    travelMode: 'DRIVING'
+  }, function(response, status){
+    if(status == "OK"){
+      dRenderer.setDirections(response);
+      document.getElementById('directions').innerHTML = '';
+      dRenderer.setPanel(document.getElementById('directions'));
+    } else {
+      navigator.notification.alert('ERROR!');
+    }
+  });
+  setCss('map', 'visibility','visible');
+  setCss('directions', 'visibility','visible');
+  setCss('instructions', 'display','none');
+}
 // To check a complete list of events supported by Cordova go to
 // cordova.apache.org/docs/en/latest/cordova/events/events.html
