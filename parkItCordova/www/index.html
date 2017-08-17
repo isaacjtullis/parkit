@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link type="text/css" rel="stylesheet" href="parkIt.css" />
+    <link type="text/css" rel="stylesheet" href="parkItIos.css" />
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCsV3_Nhjlb0NCAI1iTB-QTXMZY4Bns_xk"></script>
+    <script type="text/javascript" src="parkIt.js"></script>
+    <script type="text/javascript" src="cordova.js"></script>
+    <title>Park It</title>
+  </head>
+  <body>
+    <div id="navbar">
+      <button id="park" onClick="setParkingLocation()">Park</button>
+      Park It
+      <button id="retrieve" onClick="getParkingLocation()">Find</button>
+    </div>
+    <div id="container">
+      <div id="instructions">
+        <p>Click the Park button to set the parking location</p>
+        <p>Click the Find button to retrieve the parking location</p>
+        <p style="text-align: center"><button id="gotIt" onClick="setCss('instructions', 'display', 'none')">Got It</button></p>
+      </div>
+    </div>
+    <div id="map"></div>
+    <div id="directions"></div>
+  </body>
+</html>
